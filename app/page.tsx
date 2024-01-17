@@ -2,7 +2,7 @@ import Feed from "@/components/Feed";
 
 const Page = () => {
   return (
-    <div>
+    <div className="flex items-center justify-between responsive-width py-5">
       <Feed />
     </div>
   );
