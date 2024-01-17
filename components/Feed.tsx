@@ -12,8 +12,8 @@ import Image from "next/image";
 const Feed = () => {
   return (
     <div className="w-full">
-      <div className="grid grid-cols-5 grid-rows-4 gap-3 h-[80vh] [&>*]:rounded-3xl [&>*]:overflow-hidden [&>*]:relative [&>*]:after:content-none [&>*]:after:absolute [&>*]:after:left-0 [&>*]:after:top-0 [&>*]:after:w-full [&>*]:after:h-full [&>*]:after:opacity-0 [&>*]:after:transition-all [&>*]:cursor-pointer [&>*]:shadow-md">
-        <div className="image-con col-span-2">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 h-[110vh] sm:h-[80vh] [&>*]:rounded-3xl [&>*]:overflow-hidden [&>*]:relative [&>*]:after:content-none [&>*]:after:absolute [&>*]:after:left-0 [&>*]:after:top-0 [&>*]:after:w-full [&>*]:after:h-full [&>*]:after:opacity-0 [&>*]:after:transition-all [&>*]:cursor-pointer [&>*]:shadow-md [&>*]:image-con">
+        <div className="sm:col-span-2 decor">
           <Image
             src={decor}
             alt="decor"
@@ -26,11 +26,11 @@ const Feed = () => {
               objectPosition: "100% 80%",
             }}
           />
-          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-bold text-3xl">
+          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
             Home Decor
           </p>
         </div>
-        <div className="image-con col-span-2">
+        <div className="sm:col-span-2 workoutClothes">
           <Image
             src={workoutClothes}
             alt="workoutClothes"
@@ -43,11 +43,11 @@ const Feed = () => {
               objectPosition: "100% 10%",
             }}
           />
-          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-bold text-3xl">
+          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
             Workout clothes
           </p>
         </div>
-        <div className="image-con row-span-3">
+        <div className="sm:row-span-3 kids">
           <Image
             src={kids}
             alt="kids"
@@ -59,11 +59,11 @@ const Feed = () => {
               transition: "all 0.5s ease all",
             }}
           />
-          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute md:left-5 left-2 bottom-3 font-bold text-3xl [writing-mode:tb-rl] -rotate-180 md:rotate-0 md:[writing-mode:horizontal-tb]">
+          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute sm:left-5 left-2 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl sm:rotate-0 sm:[writing-mode:horizontal-tb]">
             Kids
           </p>
         </div>
-        <div className="image-con row-span-3">
+        <div className="sm:row-span-3 shoes">
           <Image
             src={shoes}
             alt="shoes"
@@ -75,27 +75,11 @@ const Feed = () => {
               transition: "all 0.5s ease all",
             }}
           />
-          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute md:left-5 left-2 bottom-3 font-bold text-3xl [writing-mode:tb-rl] -rotate-180 md:rotate-0 md:[writing-mode:horizontal-tb]">
+          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute sm:left-5 left-2 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl sm:rotate-0 sm:[writing-mode:horizontal-tb]">
             Shoes
           </p>
         </div>
-        <div className="image-con ">
-          <Image
-            src={electronics}
-            alt="electronics"
-            quality={40}
-            placeholder="blur"
-            fill
-            style={{
-              objectFit: "cover",
-              transition: "all 0.5s ease all",
-            }}
-          />
-          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-bold text-3xl">
-            Electronics
-          </p>
-        </div>
-        <div className="image-con ">
+        <div className="sm:col-span-3 sm:row-span-2 exercise">
           <Image
             src={exercise}
             alt="exercise"
@@ -108,8 +92,24 @@ const Feed = () => {
               objectPosition: "100% 10%",
             }}
           />
-          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-bold text-3xl">
+          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
             Exercise and Fitness
+          </p>
+        </div>
+        <div className="sm:col-span-4 electronics">
+          <Image
+            src={electronics}
+            alt="electronics"
+            quality={40}
+            placeholder="blur"
+            fill
+            style={{
+              objectFit: "cover",
+              transition: "all 0.5s ease all",
+            }}
+          />
+          <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
+            Electronics
           </p>
         </div>
       </div>
