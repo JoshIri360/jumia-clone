@@ -22,8 +22,10 @@ import {
   ShoppingCart,
   User,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const Nav = () => {
+  const { theme, setTheme } = useTheme()
   const [open, setOpen] = React.useState(false);
   const navBar = React.useRef<HTMLDivElement>(null);
 
@@ -49,7 +51,7 @@ const Nav = () => {
         <div className="flex gap-3">
           <Input
             placeholder="Search products, brands and categories"
-            className="w-48 md:w-[20vw] lg:w-[35vw]"
+            className="w-48 md:w-[20vw] lg:w-[35vw] text-primary"
           />
           <Button>Search</Button>
         </div>
@@ -57,7 +59,7 @@ const Nav = () => {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger className="!px-2">
-                <div className="flex flex-center gap-1">
+                <div className="flex flex-center gap-1 text-primary">
                   <User />
                   Account
                 </div>
@@ -66,7 +68,7 @@ const Nav = () => {
                 <NavigationMenuLink
                   className={`${navigationMenuTriggerStyle()}`}
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 text-primary">
                     <User />
                     My Account
                   </div>
@@ -74,7 +76,7 @@ const Nav = () => {
                 <NavigationMenuLink
                   className={`${navigationMenuTriggerStyle()}`}
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 text-primary">
                     <Package2 />
                     Orders
                   </div>
@@ -82,7 +84,7 @@ const Nav = () => {
                 <NavigationMenuLink
                   className={`${navigationMenuTriggerStyle()}`}
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 text-primary">
                     <Heart />
                     Saved Items
                   </div>
@@ -95,7 +97,7 @@ const Nav = () => {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger className="!px-2">
-                <div className="flex flex-center gap-1">
+                <div className="flex flex-center gap-1 text-primary">
                   <HelpCircle />
                   Help
                 </div>
@@ -104,23 +106,29 @@ const Nav = () => {
                 <NavigationMenuLink
                   className={`${navigationMenuTriggerStyle()}`}
                 >
-                  <div className="flex items-center gap-1">Help Center</div>
+                  <div className="flex items-center gap-1 text-primary">
+                    Help Center
+                  </div>
                 </NavigationMenuLink>
                 <NavigationMenuLink
                   className={`${navigationMenuTriggerStyle()}`}
                 >
-                  <div className="flex items-center gap-1">Place an order</div>
+                  <div className="flex items-center gap-1 text-primary">
+                    Place an order
+                  </div>
                 </NavigationMenuLink>
                 <NavigationMenuLink
                   className={`${navigationMenuTriggerStyle()}`}
                 >
-                  <div className="flex items-center gap-1">Payment options</div>
+                  <div className="flex items-center gap-1 text-primary">
+                    Payment options
+                  </div>
                 </NavigationMenuLink>
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <div
-                className={`${navigationMenuTriggerStyle()} flex flex-center gap-1 px-4 cursor-pointer`}
+                className={`${navigationMenuTriggerStyle()} flex flex-center gap-1 text-primary px-4 cursor-pointer`}
               >
                 <ShoppingCart />
                 Cart

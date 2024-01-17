@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -23,9 +24,18 @@ export default function RootLayout({
           <div className="w-full flex flex-center border-b shadow-md">
             <Nav />
           </div>
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </main>
       </body>
     </html>
   );
 }
+
+export const dynamicParams = false;
