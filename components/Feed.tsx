@@ -27,7 +27,7 @@ const Feed = () => {
                 objectPosition: "100% 80%",
               }}
             />
-            <p className="text-secondary inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
+            <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
               Home Decor
             </p>
           </Link>
@@ -46,7 +46,7 @@ const Feed = () => {
                 objectPosition: "100% 10%",
               }}
             />
-            <p className="text-secondary inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
+            <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
               Workout clothes
             </p>
           </Link>
@@ -64,7 +64,7 @@ const Feed = () => {
                 transition: "all 0.5s ease all",
               }}
             />
-            <p className="text-secondary inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute sm:left-5 left-2 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl sm:rotate-0 sm:[writing-mode:horizontal-tb]">
+            <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute sm:left-5 left-2 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl sm:rotate-0 sm:[writing-mode:horizontal-tb]">
               Kids
             </p>
           </Link>
@@ -82,7 +82,7 @@ const Feed = () => {
                 transition: "all 0.5s ease all",
               }}
             />
-            <p className="text-secondary inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute sm:left-5 left-2 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl sm:rotate-0 sm:[writing-mode:horizontal-tb]">
+            <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute sm:left-5 left-2 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl sm:rotate-0 sm:[writing-mode:horizontal-tb]">
               Shoes
             </p>
           </Link>
@@ -101,7 +101,7 @@ const Feed = () => {
                 objectPosition: "100% 10%",
               }}
             />
-            <p className="text-secondary inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
+            <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
               Exercise and Fitness
             </p>
           </Link>
@@ -119,7 +119,7 @@ const Feed = () => {
                 transition: "all 0.5s ease all",
               }}
             />
-            <p className="text-secondary inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
+            <p className="text-white inline-block pb-[2px] bg-right-bottom bg-[0% 2px] bg-no-repeat un z-10 absolute left-5 bottom-3 font-semibold text-2xl sm:font-bold sm:text-2xl md:text-3xl">
               Electronics
             </p>
           </Link>

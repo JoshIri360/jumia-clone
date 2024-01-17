@@ -21,15 +21,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main className="flex flex-col flex-center">
-          <div className="w-full flex flex-center border-b shadow-md">
-            <Nav />
-          </div>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
+            <div className="w-full flex flex-center border-b shadow-md">
+              <Nav />
+            </div>
+
             {children}
           </ThemeProvider>
         </main>

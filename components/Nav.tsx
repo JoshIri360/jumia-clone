@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import React, { useRef } from "react";
-import Logo from "@/public/assets/images/jumia-logo.png";
+import logo from "@/public/assets/images/jumia-logo.png";
+import logoLight from "@/public/assets/images/jumia-logo-light.png";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import {
@@ -23,25 +24,25 @@ import {
   User,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Nav = () => {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
   const [open, setOpen] = React.useState(false);
   const navBar = React.useRef<HTMLDivElement>(null);
 
   return (
     <nav className="flex items-center justify-between responsive-width py-3">
       <div className="w-36">
-        <Image
-          src={Logo}
-          width={Logo.width}
-          height={Logo.height}
-          alt="Logo"
-          style={{
-            width: "100%",
-            height: "auto",
-          }}
-        />
+        {
+          <Image
+            src={theme === "dark" ? logoLight : logo}
+            alt="Jumia"
+            layout="responsive"
+            width={200}
+            height={50}
+          />
+        }
       </div>
 
       <div
@@ -136,6 +137,7 @@ const Nav = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+        <ThemeToggle />
       </div>
 
       <div
