@@ -32,7 +32,7 @@ const Nav = () => {
   const navBar = React.useRef<HTMLDivElement>(null);
 
   return (
-    <nav className="flex items-center justify-between responsive-width py-3">
+    <nav className="flex items-center justify-between responsive-width py-2">
       <div className="w-36">
         {
           <Image
@@ -46,7 +46,9 @@ const Nav = () => {
       </div>
 
       <div
-        className="col-span-4 justify-self-end gap-2 hidden md:flex"
+        className={`col-span-4 justify-self-end gap-2 hidden md:flex ${
+          open ? "flex flex-col" : "flex-row"
+        }`}
         ref={navBar}
       >
         <div className="flex gap-3">
@@ -146,7 +148,9 @@ const Nav = () => {
           setOpen(!open);
         }}
       >
-        <Menu strokeWidth={2.5} size={30} />
+        <Button variant={"outline"} className="px-2 py-2">
+          <Menu strokeWidth={2} size={25} />
+        </Button>
       </div>
     </nav>
   );

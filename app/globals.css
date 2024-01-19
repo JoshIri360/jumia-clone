@@ -81,8 +81,6 @@
     @apply w-[min(90%,1150px)];
   }
 
-  
-
   .flex-center {
     @apply justify-center items-center;
   }

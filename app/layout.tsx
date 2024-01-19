@@ -27,7 +27,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="w-full flex flex-center border-b shadow-md">
+            <div className="z-10 w-full flex flex-center border-b shadow-md">
               <Nav />
             </div>
 
