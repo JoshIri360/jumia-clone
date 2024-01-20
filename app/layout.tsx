@@ -19,18 +19,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <main className="flex flex-col flex-center">
+      <body className={`${inter.className} min-h-[100vh] h-screen`}>
+        <main className="flex h-full flex-col items-center bg-secondary">
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >
-            <div className="z-10 w-full flex flex-center border-b shadow-md">
+            <div className="z-10 w-full flex flex-center border-b shadow-md bg-background">
               <Nav />
             </div>
-
             {children}
           </ThemeProvider>
         </main>

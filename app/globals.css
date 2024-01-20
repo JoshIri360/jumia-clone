@@ -122,7 +122,7 @@
   transition: transform 0.5s ease;
 }
 
-/* .un {
+.un {
   background-size: 0% 2px;
   background-image: linear-gradient(white 0 0);
   transition:
@@ -136,7 +136,7 @@
   transition:
     background-size 0.3s,
     background-position 0s;
-} */
+}
 
 @media (max-width: 640px) {
   .exercise {

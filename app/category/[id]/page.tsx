@@ -19,6 +19,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Filter } from "lucide-react";
+import Selectsort from "@/components/Selectsort";
+import Link from "next/link";
 
 export function generateStaticParams() {
   return [
@@ -51,9 +53,15 @@ const sortBy = [
 export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
   return (
-    <div className="bg-secondary w-full min-h-[90vh] flex items-center flex-col">
+    <div className="bg-secondary w-full h-full flex items-center flex-col">
       <div className="responsive-width z-0 text-sm my-3">
-        Home &gt; {id.charAt(0).toUpperCase() + id.slice(1).replace("-", " ")}
+        <span className="hover:underline">
+          <Link href="/">Home</Link>
+        </span>{" "}
+        &gt;{" "}
+        <span className="hover:underline">
+          {id.charAt(0).toUpperCase() + id.slice(1).replace("-", " ")}
+        </span>
       </div>
       <div className="responsive-width z-0 bg-background flex-1 rounded-2xl overflow-hidden">
         <div className="bg-background flex justify-between items-center px-10 py-3 border-b border-secondary">
@@ -61,24 +69,7 @@ export default function Page({ params }: { params: { id: string } }) {
             {id.charAt(0).toUpperCase() + id.replace(/-/g, " ").slice(1)}
           </p>
           <div className="h-fit flex gap-2">
-            <Select>
-              <SelectTrigger className="w-[180px] h-9">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Sort by</SelectLabel>
-                  {
-                    // @ts-ignore
-                    sortBy.map((item) => (
-                      <SelectItem value={item} key={item}>
-                        {item}
-                      </SelectItem>
-                    ))
-                  }
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <Selectsort />
             <Drawer>
               <DrawerTrigger>
                 <div className="p-2 h-9 w-9 border border-input rounded-sm flex items-center justify-center hover:bg-secondary">

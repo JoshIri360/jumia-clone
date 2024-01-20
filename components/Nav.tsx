@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import logo from "@/public/assets/images/jumia-logo.png";
 import logoLight from "@/public/assets/images/jumia-logo-light.png";
 import { Input } from "./ui/input";
@@ -25,25 +25,32 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { ThemeToggle } from "./ThemeToggle";
+import Link from "next/link";
 
 const Nav = () => {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = React.useState(false);
   const navBar = React.useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    setTheme("dark");
+  }, [setTheme]);
+
   return (
     <nav className="flex items-center justify-between responsive-width py-2">
-      <div className="w-36">
-        {
-          <Image
-            src={theme === "dark" ? logoLight : logo}
-            alt="Jumia"
-            layout="responsive"
-            width={200}
-            height={50}
-          />
-        }
-      </div>
+      <Link href="/">
+        <div className="w-36">
+          {
+            <Image
+              src={theme === "light" ? logo : logoLight}
+              alt="Jumia"
+              layout="responsive"
+              width={200}
+              height={50}
+            />
+          }
+        </div>
+      </Link>
 
       <div
         className={`col-span-4 justify-self-end gap-2 hidden md:flex ${
