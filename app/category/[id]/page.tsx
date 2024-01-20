@@ -60,10 +60,10 @@ export default function Page({ params }: { params: { id: string } }) {
         </span>{" "}
         &gt;{" "}
         <span className="hover:underline">
-          {id.charAt(0).toUpperCase() + id.slice(1).replace("-", " ")}
+          {id.charAt(0).toUpperCase() + id.slice(1).replace(/-/g, " ")}
         </span>
       </div>
-      <div className="responsive-width z-0 bg-background flex-1 rounded-2xl overflow-hidden">
+      <div className="responsive-width z-0 bg-background flex-1 rounded-2xl overflow-hidden flex-col">
         <div className="bg-background flex justify-between items-center px-10 py-3 border-b border-secondary">
           <p className="text-2xl font-semibold">
             {id.charAt(0).toUpperCase() + id.replace(/-/g, " ").slice(1)}
