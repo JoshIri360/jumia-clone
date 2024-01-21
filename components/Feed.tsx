@@ -21,6 +21,7 @@ const Feed = () => {
               quality={70}
               placeholder="blur"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{
                 objectFit: "cover",
                 transition: "all 0.5s ease all",
@@ -40,6 +41,7 @@ const Feed = () => {
               quality={40}
               placeholder="blur"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{
                 objectFit: "cover",
                 transition: "all 0.5s ease all",
@@ -59,6 +61,7 @@ const Feed = () => {
               quality={40}
               placeholder="blur"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{
                 objectFit: "cover",
                 transition: "all 0.5s ease all",
@@ -77,6 +80,7 @@ const Feed = () => {
               quality={40}
               placeholder="blur"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{
                 objectFit: "cover",
                 transition: "all 0.5s ease all",
@@ -95,6 +99,7 @@ const Feed = () => {
               quality={40}
               placeholder="blur"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{
                 objectFit: "cover",
                 transition: "all 0.5s ease all",
@@ -114,6 +119,7 @@ const Feed = () => {
               quality={40}
               placeholder="blur"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{
                 objectFit: "cover",
                 transition: "all 0.5s ease all",

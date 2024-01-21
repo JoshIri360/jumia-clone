@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,17 +22,19 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} min-h-[100vh]`}>
         <main className="flex h-full flex-col items-center bg-secondary min-h-[inherit]">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="z-10 w-full flex flex-center border-b shadow-md bg-background">
-              <Nav />
-            </div>
-            {children}
-          </ThemeProvider>
+          <SessionProvider refetchOnWindowFocus={false}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="light"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="z-10 w-full flex flex-center border-b shadow-md bg-background">
+                <Nav></Nav>
+              </div>
+              {children}
+            </ThemeProvider>
+          </SessionProvider>
         </main>
       </body>
     </html>

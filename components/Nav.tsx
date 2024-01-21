@@ -26,11 +26,15 @@ import {
 import { useTheme } from "next-themes";
 import { ThemeToggle } from "./ThemeToggle";
 import Link from "next/link";
+import { useSession, getSession } from "next-auth/react";
 
 const Nav = () => {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = React.useState(false);
   const navBar = React.useRef<HTMLDivElement>(null);
+  const { data: session, status } = useSession();
+
+  console.log(session);
 
   useEffect(() => {
     setTheme("dark");
@@ -71,7 +75,9 @@ const Nav = () => {
               <NavigationMenuTrigger className="!px-2">
                 <div className="flex flex-center gap-1 text-primary">
                   <User />
-                  Account
+                  {session
+                    ? `Hi, ${session?.user?.name?.split(" ")[0]}`
+                    : "My Account"}
                 </div>
               </NavigationMenuTrigger>
               <NavigationMenuContent className="[&>*]:!w-full [&>*]:!text-nowrap [&>*]:!justify-start [&>*]:cursor-pointer">
