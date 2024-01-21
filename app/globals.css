@@ -16,7 +16,7 @@
     --primary: 24 9.8% 10%;
     --primary-foreground: 60 9.1% 97.8%;
 
-    --secondary: 60 4.8% 95.9%;
+    --secondary: 60 4.8% 86.9%;
     --secondary-foreground: 24 9.8% 10%;
 
     --muted: 60 4.8% 95.9%;
@@ -117,7 +117,7 @@
   grid-area: 1 / 3 / 2 / 5;
 }
 
-.image-con:hover img {
+/* .image-con:hover img {
   transform: scale(1.06);
   transition: transform 0.5s ease;
 }
@@ -136,7 +136,7 @@
   transition:
     background-size 0.3s,
     background-position 0s;
-}
+} */
 
 @media (max-width: 640px) {
   .exercise {
@@ -179,3 +179,64 @@
     grid-row-end: 11;
   }
 }
+
+
+
+
+  ._background {background: hsl(0 0% 100%)}
+  ._foreground {background: hsl(20 14.3% 4.1%)}
+
+  ._card {background: hsl(0 0% 100%)}
+  ._card-foreground {background: hsl(20 14.3% 4.1%)}
+
+  ._popover {background: hsl(0 0% 100%)}
+  ._popover-foreground {background: hsl(20 14.3% 4.1%)}
+
+  ._primary {background: hsl(24 9.8% 10%)}
+  ._primary-foreground {background: hsl(60 9.1% 97.8%)}
+
+  ._secondary {background: hsl(60, 5%, 96%)}
+  ._secondary-foreground {background: hsl(24 9.8% 10%)}
+
+  ._muted {background: hsl(60 4.8% 95.9%)}
+  ._muted-foreground {background: hsl(25 5.3% 44.7%)}
+
+  ._accent {background: hsl(60 4.8% 95.9%)}
+  ._accent-foreground {background: hsl(24 9.8% 10%)}
+
+  ._destructive {background: hsl(0 84.2% 60.2%)}
+  ._destructive-foreground {background: hsl(60 9.1% 97.8%)}
+
+  ._border {background: hsl(20 5.9% 90%)}
+  ._input {background: hsl(20 5.9% 90%)}
+  ._ring {background: hsl(20 14.3% 4.1%)}
+
+  ._radius {background: hsl(0.5)}
+
+  ._background {background: hsl(20 14.3% 4.1%)}
+  ._foreground {background: hsl(60 9.1% 97.8%)}
+
+  ._card {background: hsl(20 14.3% 4.1%)}
+  ._card-foreground {background: hsl(60 9.1% 97.8%)}
+
+  ._popover {background: hsl(20 14.3% 4.1%)}
+  ._popover-foreground {background: hsl(60 9.1% 97.8%)}
+
+  ._primary {background: hsl(60 9.1% 97.8%)}
+  ._primary-foreground {background: hsl(24 9.8% 10%)}
+
+  ._secondary {background: hsl(12 6.5% 15.1%)}
+  ._secondary-foreground {background: hsl(60 9.1% 97.8%)}
+
+  ._muted {background: hsl(12 6.5% 15.1%)}
+  ._muted-foreground {background: hsl(24 5.4% 63.9%)}
+
+  ._accent {background: hsl(12 6.5% 15.1%)}
+  ._accent-foreground {background: hsl(60 9.1% 97.8%)}
+
+  ._destructive {background: hsl(0 62.8% 30.6%)}
+  ._destructive-foreground {background: hsl(60 9.1% 97.8%)}
+
+  ._border {background: hsl(12 6.5% 15.1%)}
+  ._input {background: hsl(12 6.5% 15.1%)}
+  ._ring {background: hsl(24 5.7% 82.9%)}

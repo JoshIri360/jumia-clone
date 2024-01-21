@@ -18,7 +18,7 @@ const Feed = () => {
             <Image
               src={decor}
               alt="decor"
-              quality={40}
+              quality={70}
               placeholder="blur"
               fill
               style={{

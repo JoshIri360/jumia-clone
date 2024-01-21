@@ -19,8 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-[100vh] h-screen`}>
-        <main className="flex h-full flex-col items-center bg-secondary">
+      <body className={`${inter.className} min-h-[100vh]`}>
+        <main className="flex h-full flex-col items-center bg-secondary min-h-[inherit]">
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
