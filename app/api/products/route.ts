@@ -1,19 +1,23 @@
 import { connectToDB } from "@/utils/database";
-import Prompt from "@/models/products";
+import Product from "@/models/products";
 
-export const GET = async (req, res) => {
+export const GET = async (req: Request, res: Response) => {
+  console.log(req);
+
   try {
     await connectToDB();
 
-    const prompts = await Prompt.find().populate("createdBy", "image username");
+    const products = await Product.find({ category: "yoga" });
 
-    return new Response(JSON.stringify(prompts), {
+    console.log(products[59]._doc);
+
+    return new Response(JSON.stringify(products), {
       status: 201,
       headers: {
         "Content-Type": "application/json",
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     return new Response(JSON.stringify({ msg: error.message }), {
       status: 500,
       headers: {

@@ -105,6 +105,13 @@ const Nav = () => {
                     Saved Items
                   </div>
                 </NavigationMenuLink>
+                {session && (
+                  <NavigationMenuLink
+                    className={`flex flex-col pt-1 py-3 items-center justify-center`}
+                  >
+                    <Button>Sign Out</Button>
+                  </NavigationMenuLink>
+                )}
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>

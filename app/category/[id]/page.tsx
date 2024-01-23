@@ -43,7 +43,9 @@ const sortBy = [
   "Product Rating",
 ];
 
-export default function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
+  const products = await fetch("http://localhost:3000/api/products")
+
   const { id } = params;
   return (
     <div className="bg-secondary w-full h-full flex items-center flex-col">
