@@ -43,8 +43,21 @@ const sortBy = [
   "Product Rating",
 ];
 
+interface Product {
+  name: string;
+  category: string;
+  image: string;
+  link: string;
+  ratings: number;
+  no_of_ratings: number;
+  discount_price: number;
+  actual_price: number;
+}
+
 export default async function Page({ params }: { params: { id: string } }) {
-  const products = await fetch("http://localhost:3000/api/products")
+  const res = await fetch("http://localhost:3000/api/products");
+  const products = await res.json();
+  console.log(products);
 
   const { id } = params;
   return (
@@ -74,7 +87,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               <Selectsort />
               <Drawer>
                 <DrawerTrigger asChild>
-                {/* <div className="filter p-2 h-9 w-9 border border-input rounded-md flex items-center justify-center hover:bg-secondary">
+                  {/* <div className="filter p-2 h-9 w-9 border border-input rounded-md flex items-center justify-center hover:bg-secondary">
                     <Filter />
                   </div> */}
                   <Button variant={"outline"} size={"icon"} className="h-9">
@@ -101,23 +114,22 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div className="flex responsive-width sm:w-[min(95%,1250px)] justify-center py-7">
           <div className="grid gap-3 sm:gap-5 md:gap-6 lg:gap-7 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between w-full [&>*]:bg-secondary [&>*]:w-full [&>*]:sm:h-96 [&>*]:h-[22rem] [&>*]:rounded-xl [&>*]:flex [&>*]:flex-col [&>*]:items-center [&>*]:p-4">
-            {[1, 2, 3, 4, 5, 6].map((_, i) => (
+            {products.map((data: object, i: number) => (
               <div key={i} className="[&>*]:text-left [&>*]:w-full">
                 <div className="relative image-con bg-card-foreground overflow-hidden rounded-xl w-full h-[65%] transition-all">
                   <Image
-                    className="un scale-125"
-                    src={shoes}
+                    className="un"
+                    src={data.image}
                     alt="Shoes"
-                    placeholder="blur"
                     fill
                     style={{
-                      objectFit: "cover",
+                      objectFit: "contain",
                       transition: "all 0.5s ease all",
                     }}
                   />
                 </div>
-                <h4 className="text-xs font-semibold sm:text-sm mt-1">
-                  Northshow Organic Liquid Matte Foundation
+                <h4 className="text-xs font-semibold sm:text-sm mt-1 line-clamp-2 text-ellipsis">
+                  {data.name}
                 </h4>
                 <h4 className="font-bold my-1">N 14,000</h4>
                 <div className="flex">

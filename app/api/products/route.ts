@@ -7,9 +7,7 @@ export const GET = async (req: Request, res: Response) => {
   try {
     await connectToDB();
 
-    const products = await Product.find({ category: "yoga" });
-
-    console.log(products[59]._doc);
+    const products = await Product.find({ category: "yoga" }).limit(20);
 
     return new Response(JSON.stringify(products), {
       status: 201,
