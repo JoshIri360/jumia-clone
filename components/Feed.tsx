@@ -18,7 +18,7 @@ const Feed = () => {
             <Image
               src={decor}
               alt="decor"
-              quality={70}
+              quality={80}
               placeholder="blur"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -38,7 +38,7 @@ const Feed = () => {
             <Image
               src={workoutClothes}
               alt="workoutClothes"
-              quality={40}
+              quality={80}
               placeholder="blur"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -58,7 +58,7 @@ const Feed = () => {
             <Image
               src={kids}
               alt="kids"
-              quality={40}
+              quality={80}
               placeholder="blur"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -77,7 +77,7 @@ const Feed = () => {
             <Image
               src={shoes}
               alt="shoes"
-              quality={40}
+              quality={80}
               placeholder="blur"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -96,7 +96,7 @@ const Feed = () => {
             <Image
               src={exercise}
               alt="exercise"
-              quality={40}
+              quality={80}
               placeholder="blur"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -116,7 +116,7 @@ const Feed = () => {
             <Image
               src={electronics}
               alt="electronics"
-              quality={40}
+              quality={80}
               placeholder="blur"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

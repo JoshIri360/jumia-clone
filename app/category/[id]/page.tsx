@@ -61,8 +61,10 @@ interface Product {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const res = await fetch("http://localhost:3000/api/products");
-  const products = await res.json();
+  const res = await fetch(
+    `http://localhost:3000/api/category/${params.id}/products`
+  );
+  const { products } = await res.json();
 
   console.log(products);
 
@@ -143,10 +145,18 @@ export default async function Page({ params }: { params: { id: string } }) {
                     {data.name}
                   </h4>
                   <div className="flex items-center gap-2">
-                    <h4 className="font-bold my-1">
-                      ₦ {data.discount_price * 10}
-                    </h4>
-                    <h4 className="text-muted-foreground font-semibold my-1 text-sm line-through">
+                    {data.discount_price && (
+                      <h4 className="font-bold my-1">
+                        ₦ {data.discount_price * 10}
+                      </h4>
+                    )}
+                    <h4
+                      className={`${
+                        data.discount_price
+                          ? "text-muted-foreground font-semibold my-1 text-sm line-through"
+                          : "font-bold my-1"
+                      }`}
+                    >
                       ₦ {data.actual_price * 10}
                     </h4>
                   </div>
