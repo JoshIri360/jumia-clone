@@ -20,11 +20,13 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
       .limit(limit ? parseInt(limit) : 10)
       .skip(page ? parseInt(page) * 10 : 0);
     const count = await Product.countDocuments({ category: params.id });
+    const totalPages = Math.ceil(count / (limit ? parseInt(limit) : 10));
 
     return new Response(
       JSON.stringify({
         products,
         count,
+        totalPages,
       }),
       {
         status: 201,

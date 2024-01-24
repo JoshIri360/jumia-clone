@@ -66,7 +66,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     `http://localhost:3000/api/category/${params.id}/products`,
     {
       params: {
-        page: "1",
+        page: "0",
         limit: "20",
       },
     }
