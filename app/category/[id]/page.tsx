@@ -9,6 +9,15 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { Filter, Star, StarHalf } from "lucide-react";
 import Selectsort from "@/components/Selectsort";
 import Link from "next/link";
@@ -73,6 +82,8 @@ export default async function Page({ params }: { params: { id: string } }) {
   );
 
   const products: Product[] = res.data.products;
+  const totalPages: number = res.data.totalPages;
+  const currentPage: number = 1;
 
   const { id } = params;
   return (
@@ -127,7 +138,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <div className="flex responsive-width sm:w-[min(95%,1250px)] justify-center py-7">
+        <div className="flex flex-col gap-4 responsive-width sm:w-[min(95%,1250px)] justify-center py-7 pb-4">
           <div className="grid gap-3 sm:gap-5 md:gap-6 lg:gap-7 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between w-full">
             {products.map((data: Product, i: number) => (
               <div
@@ -153,7 +164,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                   <div className="flex items-center gap-2">
                     {data.discount_price && (
                       <h4 className="font-bold my-1">
-                        ₦ {data.discount_price * 10}
+                        ₦ {(data.discount_price * 10).toLocaleString()}
                       </h4>
                     )}
                     <h4
@@ -163,7 +174,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                           : "font-bold my-1"
                       }`}
                     >
-                      ₦ {data.actual_price * 10}
+                      ₦ {(data.actual_price * 10).toLocaleString()}
                     </h4>
                   </div>
                 </div>
@@ -194,6 +205,28 @@ export default async function Page({ params }: { params: { id: string } }) {
               </div>
             ))}
           </div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">{currentPage}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">{currentPage + 1}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">{totalPages}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
       </div>
     </div>
