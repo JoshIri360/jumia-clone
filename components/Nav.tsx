@@ -34,8 +34,6 @@ const Nav = () => {
   const navBar = React.useRef<HTMLDivElement>(null);
   const { data: session, status } = useSession();
 
-  console.log(session);
-
   useEffect(() => {
     setTheme("dark");
   }, [setTheme]);

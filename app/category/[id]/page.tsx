@@ -13,6 +13,7 @@ import { Filter, Star, StarHalf } from "lucide-react";
 import Selectsort from "@/components/Selectsort";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
 import shoes from "@/public/assets/images/shoes.jpg";
 
 export function generateStaticParams() {
@@ -61,12 +62,17 @@ interface Product {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const res = await fetch(
-    `http://localhost:3000/api/category/${params.id}/products`
+  const res = await axios.get(
+    `http://localhost:3000/api/category/${params.id}/products`,
+    {
+      params: {
+        page: "1",
+        limit: "20",
+      },
+    }
   );
-  const { products } = await res.json();
 
-  console.log(products);
+  const products: Product[] = res.data.products;
 
   const { id } = params;
   return (
