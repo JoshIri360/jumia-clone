@@ -196,7 +196,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                       )}
 
                       <p className="text-sm ml-2 text-muted-foreground font-semibold">
-                        ({data.no_of_ratings})
+                        ({data.no_of_ratings.toLocaleString()})
                       </p>
                     </div>
                   )}
