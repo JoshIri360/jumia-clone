@@ -9,7 +9,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Filter, Star } from "lucide-react";
+import { Filter, Star, StarHalf } from "lucide-react";
 import Selectsort from "@/components/Selectsort";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,21 +17,27 @@ import shoes from "@/public/assets/images/shoes.jpg";
 
 export function generateStaticParams() {
   return [
-    { id: "exercise-and-fitness" },
-    { id: "electronics" },
-    { id: "lingerie" },
+    { id: "cardio-equipment" },
     { id: "clothing" },
-    { id: "kids-fashion" },
+    { id: "electronics" },
+    { id: "exercise-and-fitness" },
+    { id: "furniture" },
+    { id: "heating-and-cooling-appliances" },
     { id: "home-decor" },
+    { id: "home-entertainment-systems" },
+    { id: "international-toy-store" },
+    { id: "kids-fashion" },
+    { id: "lingerie-and-nightwear" },
+    { id: "refurbished-and-pen-box" },
+    { id: "school-bags" },
     { id: "shoes" },
     { id: "sportswear" },
+    { id: "stem-toys-store" },
+    { id: "toys-gifting-store" },
+    { id: "value-bazaar" },
+    { id: "washing-machines" },
     { id: "watches" },
     { id: "yoga" },
-    { id: "home-entertainment" },
-    { id: "heating-cooling-appliances" },
-    { id: "school-bags" },
-    { id: "furniture" },
-    { id: "washing-machines" },
   ];
 }
 
@@ -57,6 +63,7 @@ interface Product {
 export default async function Page({ params }: { params: { id: string } }) {
   const res = await fetch("http://localhost:3000/api/products");
   const products = await res.json();
+
   console.log(products);
 
   const { id } = params;
@@ -113,31 +120,61 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
         <div className="flex responsive-width sm:w-[min(95%,1250px)] justify-center py-7">
-          <div className="grid gap-3 sm:gap-5 md:gap-6 lg:gap-7 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between w-full [&>*]:bg-secondary [&>*]:w-full [&>*]:sm:h-96 [&>*]:h-[22rem] [&>*]:rounded-xl [&>*]:flex [&>*]:flex-col [&>*]:items-center [&>*]:p-4">
-            {products.map((data: object, i: number) => (
-              <div key={i} className="[&>*]:text-left [&>*]:w-full">
-                <div className="relative image-con bg-card-foreground overflow-hidden rounded-xl w-full h-[65%] transition-all">
-                  <Image
-                    className="un"
-                    src={data.image}
-                    alt="Shoes"
-                    fill
-                    style={{
-                      objectFit: "contain",
-                      transition: "all 0.5s ease all",
-                    }}
-                  />
+          <div className="grid gap-3 sm:gap-5 md:gap-6 lg:gap-7 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between w-full">
+            {products.map((data: Product, i: number) => (
+              <div
+                key={i}
+                className="bg-secondary rounded-xl flex justify-between flex-col items-center p-4"
+              >
+                <div className="[&>*]:text-left [&>*]:w-full w-full sm:h-[19] h-[17rem] flex flex-col items-center">
+                  <div className="relative image-con bg-white overflow-hidden rounded-xl w-full h-[75%] transition-all">
+                    <Image
+                      className="un"
+                      src={data.image}
+                      alt="Shoes"
+                      fill
+                      style={{
+                        objectFit: "contain",
+                        transition: "all 0.5s ease all",
+                      }}
+                    />
+                  </div>
+                  <h4 className="text-xs font-semibold sm:text-sm mt-1 line-clamp-2 text-ellipsis">
+                    {data.name}
+                  </h4>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-bold my-1">
+                      ₦ {data.discount_price * 10}
+                    </h4>
+                    <h4 className="text-muted-foreground font-semibold my-1 text-sm line-through">
+                      ₦ {data.actual_price * 10}
+                    </h4>
+                  </div>
                 </div>
-                <h4 className="text-xs font-semibold sm:text-sm mt-1 line-clamp-2 text-ellipsis">
-                  {data.name}
-                </h4>
-                <h4 className="font-bold my-1">N 14,000</h4>
-                <div className="flex">
-                  {[1, 2, 3, 4].map((_, i) => (
-                    <Star key={i} size={18} strokeWidth={2.5} color="#FD9903" />
-                  ))}
+                <div className="flex flex-col w-full">
+                  {data.ratings && (
+                    <div className="flex items-end">
+                      {Array.from(
+                        { length: Math.floor(data.ratings) },
+                        (_, i) => (
+                          <Star key={i} fill="#FD9903" strokeWidth={0} />
+                        )
+                      )}
+
+                      {Array.from(
+                        { length: 5 - Math.floor(data.ratings) },
+                        (_, i) => (
+                          <Star key={i} fill="gray" strokeWidth={0} />
+                        )
+                      )}
+
+                      <p className="text-sm ml-2 text-muted-foreground font-semibold">
+                        ({data.no_of_ratings})
+                      </p>
+                    </div>
+                  )}
+                  <Button className="mt-2 font-bold w-full">ADD TO CART</Button>
                 </div>
-                <Button className="mt-2 font-bold">ADD TO CART</Button>
               </div>
             ))}
           </div>
