@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   Select,
   SelectContent,
@@ -9,19 +9,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter } from "lucide-react";
-import { Button } from "./ui/button";
-
-const sortBy = [
-  "Popularity",
-  "Newest Arrivals",
-  "Price: Low to High",
-  "Price: High to Low",
-  "Product Rating",
-];
 
 const Selectsort = () => {
+  const sortBy = useMemo(
+    () => [
+      "Popularity",
+      "Newest Arrivals",
+      "Price: Low to High",
+      "Price: High to Low",
+      "Product Rating",
+    ],
+    []
+  );
+
   const [selected, setSelected] = React.useState(sortBy[0]);
+
+  const handleItemClick = useCallback((item: string) => {
+    setSelected(item);
+  }, []);
+
   return (
     <Select>
       <SelectTrigger className="w-[180px] h-9 border-0 hover:bg-secondary">
@@ -34,7 +40,7 @@ const Selectsort = () => {
             <SelectItem
               value={item}
               key={item}
-              onClick={() => setSelected(item)}
+              onClick={() => handleItemClick(item)}
             >
               {item}
             </SelectItem>
