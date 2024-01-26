@@ -30,18 +30,15 @@ const Selectsort = () => {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Sort by</SelectLabel>
-          {
-            // @ts-ignore
-            sortBy.map((item) => (
-              <SelectItem
-                value={item}
-                key={item}
-                onClick={() => setSelected(item)}
-              >
-                {item}
-              </SelectItem>
-            ))
-          }
+          {sortBy.map((item) => (
+            <SelectItem
+              value={item}
+              key={item}
+              onClick={() => setSelected(item)}
+            >
+              {item}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
