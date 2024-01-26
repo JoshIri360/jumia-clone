@@ -113,9 +113,6 @@ export default async function Page({ params }: { params: { id: string } }) {
               <Selectsort />
               <Drawer>
                 <DrawerTrigger asChild>
-                  {/* <div className="filter p-2 h-9 w-9 border border-input rounded-md flex items-center justify-center hover:bg-secondary">
-                    <Filter />
-                  </div> */}
                   <Button variant={"outline"} size={"icon"} className="h-9">
                     <Filter size={18} />
                   </Button>
