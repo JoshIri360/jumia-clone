@@ -52,14 +52,6 @@ export function generateStaticParams() {
   ];
 }
 
-const sortBy = [
-  "Popularity",
-  "Newest Arrivals",
-  "Price: Low to High",
-  "Price: High to Low",
-  "Product Rating",
-];
-
 interface Product {
   _id: string;
   name: string;
