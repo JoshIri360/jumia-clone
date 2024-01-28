@@ -17,6 +17,9 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
     await connectToDB();
 
     const products = await Product.find({ category: params.id })
+      .sort({
+        no_of_ratings: -1,
+      })
       .limit(limit ? parseInt(limit) : 10)
       .skip(page ? parseInt(page) * 10 : 0);
     const count = await Product.countDocuments({ category: params.id });

@@ -24,6 +24,7 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import shoes from "@/public/assets/images/shoes.jpg";
+import AddToCartButton from "@/components/AddToCartButton";
 
 export function generateStaticParams() {
   return [
@@ -60,6 +61,7 @@ const sortBy = [
 ];
 
 interface Product {
+  _id: string;
   name: string;
   category: string;
   image: string;
@@ -138,68 +140,67 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="flex flex-col gap-4 responsive-width sm:w-[min(95%,1250px)] justify-center py-7 pb-4">
           <div className="grid gap-3 sm:gap-5 md:gap-6 lg:gap-7 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between w-full">
             {products.map((data: Product, i: number) => (
-              <div
-                key={i}
-                className="bg-secondary rounded-xl flex justify-between flex-col items-center p-4"
-              >
-                <div className="[&>*]:text-left [&>*]:w-full w-full sm:h-[19] h-[17rem] flex flex-col items-center">
-                  <div className="relative image-con bg-white overflow-hidden rounded-xl w-full h-[75%] transition-all">
-                    <Image
-                      className="un"
-                      src={data.image}
-                      alt="Shoes"
-                      fill
-                      style={{
-                        objectFit: "contain",
-                        transition: "all 0.5s ease all",
-                      }}
-                    />
-                  </div>
-                  <h4 className="text-xs font-semibold sm:text-sm mt-1 line-clamp-2 text-ellipsis">
-                    {data.name}
-                  </h4>
-                  <div className="flex items-center gap-2">
-                    {data.discount_price && (
-                      <h4 className="font-bold my-1">
-                        ₦ {(data.discount_price * 10).toLocaleString()}
-                      </h4>
-                    )}
-                    <h4
-                      className={`${
-                        data.discount_price
-                          ? "text-muted-foreground font-semibold my-1 text-sm line-through"
-                          : "font-bold my-1"
-                      }`}
-                    >
-                      ₦ {(data.actual_price * 10).toLocaleString()}
-                    </h4>
-                  </div>
-                </div>
-                <div className="flex flex-col w-full">
-                  {data.ratings && (
-                    <div className="flex items-end">
-                      {Array.from(
-                        { length: Math.floor(data.ratings) },
-                        (_, i) => (
-                          <Star key={i} fill="#FD9903" strokeWidth={0} />
-                        )
-                      )}
-
-                      {Array.from(
-                        { length: 5 - Math.floor(data.ratings) },
-                        (_, i) => (
-                          <Star key={i} fill="gray" strokeWidth={0} />
-                        )
-                      )}
-
-                      <p className="text-sm ml-2 text-muted-foreground font-semibold">
-                        ({data.no_of_ratings.toLocaleString()})
-                      </p>
+              <Link key={i} href={`/products/${data._id}`}>
+                <div className="bg-secondary rounded-xl flex justify-between flex-col items-center p-4">
+                  <div className="[&>*]:text-left [&>*]:w-full w-full sm:h-[19] h-[17rem] flex flex-col items-center">
+                    <div className="relative image-con bg-white overflow-hidden rounded-xl w-full h-[75%] transition-all">
+                      <Image
+                        className="un"
+                        src={data.image}
+                        alt="Shoes"
+                        fill
+                        style={{
+                          objectFit: "contain",
+                          transition: "all 0.5s ease all",
+                        }}
+                      />
                     </div>
-                  )}
-                  <Button className="mt-2 font-bold w-full">ADD TO CART</Button>
+                    <h4 className="text-xs font-semibold sm:text-sm mt-1 line-clamp-2 text-ellipsis">
+                      {data.name}
+                    </h4>
+                    <div className="flex items-center gap-2">
+                      {data.discount_price && (
+                        <h4 className="font-bold my-1">
+                          ₦ {(data.discount_price * 10).toLocaleString()}
+                        </h4>
+                      )}
+                      <h4
+                        className={`${
+                          data.discount_price
+                            ? "text-muted-foreground font-semibold my-1 text-sm line-through"
+                            : "font-bold my-1"
+                        }`}
+                      >
+                        ₦ {(data.actual_price * 10).toLocaleString()}
+                      </h4>
+                    </div>
+                  </div>
+                  <div className="flex flex-col w-full">
+                    {data.ratings && (
+                      <div className="flex items-end">
+                        {Array.from(
+                          { length: Math.floor(data.ratings) },
+                          (_, i) => (
+                            <Star key={i} fill="#FD9903" strokeWidth={0} />
+                          )
+                        )}
+
+                        {Array.from(
+                          { length: 5 - Math.floor(data.ratings) },
+                          (_, i) => (
+                            <Star key={i} fill="gray" strokeWidth={0} />
+                          )
+                        )}
+
+                        <p className="text-sm ml-2 text-muted-foreground font-semibold">
+                          ({data.no_of_ratings.toLocaleString()})
+                        </p>
+                      </div>
+                    )}
+                    <AddToCartButton />
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           <Pagination>

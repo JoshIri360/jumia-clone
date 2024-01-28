@@ -14,7 +14,6 @@ const Selectsort = () => {
   const sortBy = useMemo(
     () => [
       "Popularity",
-      "Newest Arrivals",
       "Price: Low to High",
       "Price: High to Low",
       "Product Rating",
@@ -25,13 +24,14 @@ const Selectsort = () => {
   const [selected, setSelected] = React.useState(sortBy[0]);
 
   const handleItemClick = useCallback((item: string) => {
+    console.log(item);
     setSelected(item);
   }, []);
 
   return (
     <Select>
       <SelectTrigger className="w-[180px] h-9 border-0 hover:bg-secondary">
-        <SelectValue placeholder="Sort by" />
+        <SelectValue placeholder={sortBy[0]} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
