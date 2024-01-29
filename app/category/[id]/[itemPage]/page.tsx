@@ -79,7 +79,7 @@ export default async function Page({
     `http://localhost:3000/api/category/${params.id}/products`,
     {
       params: {
-        page: "0",
+        page: params.itemPage - 1,
         limit: "20",
       },
     }
@@ -89,7 +89,7 @@ export default async function Page({
 
   const products: Product[] = res.data.products;
   const totalPages: number = res.data.totalPages;
-  const currentPage: number = 1;
+  const currentPage: number = searchParams ? searchParams.page! : 1;
 
   const { id } = params;
   return (
@@ -212,37 +212,74 @@ export default async function Page({
               <PaginationItem>
                 <PaginationPrevious
                   href={
-                    currentPage > 1 ? `/category/${id}/${currentPage - 1}` : "#"
+                    currentPage > 1
+                      ? `/category/${id}?page=${currentPage - 1}`
+                      : "#"
                   }
                 />
               </PaginationItem>
-              {currentPage > 1 && (
+              <PaginationItem>
+                <PaginationLink
+                  href={`/category/${id}/1`}
+                  isActive={currentPage === 1}
+                >
+                  1
+                </PaginationLink>
+              </PaginationItem>
+              {currentPage > 3 && (
                 <PaginationItem>
-                  <PaginationLink href={`/category/${id}/${currentPage - 1}`}>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              )}
+              {currentPage > 2 && (
+                <PaginationItem>
+                  <PaginationLink
+                    href={`/category/${id}?page=${currentPage - 1}`}
+                  >
                     {currentPage - 1}
                   </PaginationLink>
                 </PaginationItem>
               )}
+              {currentPage > 1 && currentPage < totalPages && (
+                <PaginationItem>
+                  <PaginationLink
+                    href={`/category/${id}?page=${currentPage}`}
+                    isActive={currentPage !== 1 && currentPage !== totalPages}
+                  >
+                    {currentPage}
+                  </PaginationLink>
+                </PaginationItem>
+              )}
+              {currentPage < totalPages - 1 && (
+                <PaginationItem>
+                  <PaginationLink
+                    href={`/category/${id}?page=${currentPage + 1}`}
+                  >
+                    {currentPage + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              )}
+              {currentPage < totalPages - 2 && (
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              )}
               <PaginationItem>
-                <PaginationLink href={`/category/${id}/${currentPage}`}>
-                  {currentPage}
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href={`/category/${id}/${currentPage + 1}`}>
-                  {currentPage + 1}
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href={`/category/${id}/${totalPages}`}>
+                <PaginationLink
+                  href={`/category/${id}/${totalPages}`}
+                  isActive={currentPage === totalPages}
+                >
                   {totalPages}
                 </PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationNext href="#" />
+                <PaginationNext
+                  href={
+                    currentPage < totalPages
+                      ? `/category/${id}?page=${currentPage + 1}`
+                      : "#"
+                  }
+                />
               </PaginationItem>
             </PaginationContent>
           </Pagination>

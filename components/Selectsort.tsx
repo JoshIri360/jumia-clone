@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import {
   Select,
   SelectContent,
@@ -9,8 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { usePathname, useRouter } from "next/navigation";
 
 const Selectsort = () => {
+  const router = useRouter();
+  const pathName = usePathname();
   const sortBy = useMemo(
     () => [
       "Popularity",
@@ -23,13 +26,12 @@ const Selectsort = () => {
 
   const [selected, setSelected] = React.useState(sortBy[0]);
 
-  const handleItemClick = useCallback((item: string) => {
-    console.log(item);
-    setSelected(item);
-  }, []);
+  useEffect(() => {
+    console.log(pathName);
+  }, [selected]);
 
   return (
-    <Select>
+    <Select onValueChange={setSelected} defaultValue="Popularity">
       <SelectTrigger className="w-[180px] h-9 border-0 hover:bg-secondary">
         <SelectValue placeholder={sortBy[0]} />
       </SelectTrigger>
@@ -37,11 +39,7 @@ const Selectsort = () => {
         <SelectGroup>
           <SelectLabel>Sort by</SelectLabel>
           {sortBy.map((item) => (
-            <SelectItem
-              value={item}
-              key={item}
-              onClick={() => handleItemClick(item)}
-            >
+            <SelectItem value={item} key={item}>
               {item}
             </SelectItem>
           ))}

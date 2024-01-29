@@ -1,0 +1,34 @@
+Mathematics Note: Approximation in Addition and Subtraction
+
+Introduction:
+In everyday situations, we often encounter numbers that are not whole or exact. Approximation is a handy technique to estimate values quickly, making mental math more accessible. This note will focus on approximating values in addition and subtraction.
+
+Approximation in Addition:
+Example 1:
+Suppose you want to add 47 + 89, but you need a quick estimate. Round each number to the nearest tens place:
+47≈50
+89≈90
+Now, add the rounded values:
+50+90=140
+So, a quick approximation suggests that 47+89 is approximately 140.
+
+Approximation in Subtraction:
+Example 2:
+Consider the subtraction problem 356−187. Round each number to the nearest tens place:
+356≈360
+187≈190
+Now, subtract the rounded values: 360−190=170
+So, a quick approximation suggests that 356−187 is approximately 170.
+
+Importance of Rounding:
+Rounding to the nearest tens, hundreds, or even thousands simplifies calculations while maintaining a reasonable level of accuracy. It's a valuable skill for quick mental math in real-life situations.
+
+Practice Problems:
+
+Approximate and calculate: 68+245
+Estimate and find the result: 892−356
+Round and add: 573+198
+Quick approximation: 421−289
+
+Conclusion:
+Mastering the art of approximation in addition and subtraction enhances your ability to make quick, yet reasonably accurate, calculations. This skill is practical in various daily scenarios and lays the foundation for more advanced mathematical concepts. Practice and enjoy the convenience of mental math!
