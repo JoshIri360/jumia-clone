@@ -107,7 +107,7 @@ const Nav = () => {
                   <NavigationMenuLink
                     className={`flex flex-col pt-1 py-3 items-center justify-center`}
                   >
-                    <Button>Sign Out</Button>
+                    <Button className="w-4/5">Sign Out</Button>
                   </NavigationMenuLink>
                 )}
               </NavigationMenuContent>

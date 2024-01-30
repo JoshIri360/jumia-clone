@@ -63,20 +63,34 @@ interface Product {
   actual_price: number;
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+interface SearchParams {
+  page: number | undefined;
+  sort: string | undefined;
+}
+
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { id: string; itemPage: number };
+  searchParams?: SearchParams;
+}) {
+  const currentPage: number = searchParams?.page ? searchParams.page * 1 : 1;
+  const sort: string = searchParams?.sort ? searchParams.sort : "popularity";
+
   const res = await axios.get(
     `http://localhost:3000/api/category/${params.id}/products`,
     {
       params: {
-        page: "0",
+        page: currentPage - 1,
         limit: "20",
+        sort: sort,
       },
     }
   );
 
   const products: Product[] = res.data.products;
   const totalPages: number = res.data.totalPages;
-  const currentPage: number = 1;
 
   const { id } = params;
   return (
@@ -132,7 +146,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <div className="grid gap-3 sm:gap-5 md:gap-6 lg:gap-7 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between w-full">
             {products.map((data: Product, i: number) => (
               <Link key={i} href={`/products/${data._id}`}>
-                <div className="bg-secondary rounded-xl flex justify-between flex-col items-center p-4">
+                <div className="bg-secondary rounded-xl flex justify-between flex-col items-center p-4 h-full">
                   <div className="[&>*]:text-left [&>*]:w-full w-full sm:h-[19] h-[17rem] flex flex-col items-center">
                     <div className="relative image-con bg-white overflow-hidden rounded-xl w-full h-[75%] transition-all">
                       <Image
@@ -199,37 +213,74 @@ export default async function Page({ params }: { params: { id: string } }) {
               <PaginationItem>
                 <PaginationPrevious
                   href={
-                    currentPage > 1 ? `/category/${id}/${currentPage - 1}` : "#"
+                    currentPage > 1
+                      ? `/category/${id}?page=${currentPage - 1}`
+                      : "#"
                   }
                 />
               </PaginationItem>
-              {currentPage > 1 && (
+              <PaginationItem>
+                <PaginationLink
+                  href={`/category/${id}?page=1`}
+                  isActive={currentPage === 1}
+                >
+                  1
+                </PaginationLink>
+              </PaginationItem>
+              {currentPage > 3 && (
                 <PaginationItem>
-                  <PaginationLink href={`/category/${id}/${currentPage - 1}`}>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              )}
+              {currentPage > 2 && (
+                <PaginationItem>
+                  <PaginationLink
+                    href={`/category/${id}?page=${currentPage - 1}`}
+                  >
                     {currentPage - 1}
                   </PaginationLink>
                 </PaginationItem>
               )}
+              {currentPage > 1 && currentPage < totalPages && (
+                <PaginationItem>
+                  <PaginationLink
+                    href={`/category/${id}?page=${currentPage}`}
+                    isActive={currentPage !== 1 && currentPage !== totalPages}
+                  >
+                    {currentPage}
+                  </PaginationLink>
+                </PaginationItem>
+              )}
+              {currentPage < totalPages - 1 && (
+                <PaginationItem>
+                  <PaginationLink
+                    href={`/category/${id}?page=${currentPage + 1}`}
+                  >
+                    {currentPage + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              )}
+              {currentPage < totalPages - 2 && (
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              )}
               <PaginationItem>
-                <PaginationLink href={`/category/${id}/${currentPage}`}>
-                  {currentPage}
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href={`/category/${id}/${currentPage + 1}`}>
-                  {currentPage + 1}
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href={`/category/${id}/${totalPages}`}>
+                <PaginationLink
+                  href={`/category/${id}?page=${totalPages}`}
+                  isActive={currentPage === totalPages}
+                >
                   {totalPages}
                 </PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationNext href="#" />
+                <PaginationNext
+                  href={
+                    currentPage < totalPages
+                      ? `/category/${id}?page=${currentPage + 1}`
+                      : "#"
+                  }
+                />
               </PaginationItem>
             </PaginationContent>
           </Pagination>

@@ -11,19 +11,42 @@ interface Request extends RequestInit {
 
 export const GET = async (req: Request, { params }: { params: Params }) => {
   const page = req.nextUrl.searchParams.get("page");
-  let limit = req.nextUrl.searchParams.get("limit");
+  const sort = req.nextUrl.searchParams.get("sort");
+  const limit: number = req.nextUrl.searchParams.get("limit")
+    ? req.nextUrl.searchParams.get("limit") * 1
+    : 10;
+
+  let sortDictionary: any = {
+    popularity: {
+      no_of_ratings: -1,
+    },
+    "price-low-to-high": {
+      discount_price: 1,
+      actual_price: 1,
+    },
+    "price-high-to-low": {
+      discount_price: -1,
+      actual_price: -1,
+    },
+    rating: {
+      rating: -1,
+    },
+  };
+
+  if (sort) {
+    sortDictionary = sortDictionary[sort];
+  }
 
   try {
     await connectToDB();
 
     const products = await Product.find({ category: params.id })
-      .sort({
-        no_of_ratings: -1,
-      })
+      .sort(sortDictionary)
       .limit(limit ? parseInt(limit) : 10)
-      .skip(page ? parseInt(page) * 10 : 0);
+      .skip(page ? parseInt(page) * 20 : 0);
     const count = await Product.countDocuments({ category: params.id });
-    const totalPages = Math.ceil(count / (limit ? parseInt(limit) : 10));
+    console.log(count);
+    const totalPages = Math.ceil(count / limit);
 
     return new Response(
       JSON.stringify({
