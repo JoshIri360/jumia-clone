@@ -63,18 +63,7 @@ interface Product {
   actual_price: number;
 }
 
-interface SearchParams {
-  page: number | undefined;
-  sort: string | undefined;
-}
-
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: string; itemPage: number };
-  searchParams?: SearchParams;
-}) {
+export default async function Page({ params }: { params: { id: string } }) {
   const res = await axios.get(
     `http://localhost:3000/api/category/${params.id}/products`,
     {
@@ -84,8 +73,6 @@ export default async function Page({
       },
     }
   );
-
-  console.log(params, searchParams);
 
   const products: Product[] = res.data.products;
   const totalPages: number = res.data.totalPages;
