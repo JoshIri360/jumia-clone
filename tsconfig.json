@@ -23,5 +23,6 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/category/[id]/route.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "downlevelIteration": true
 }

@@ -55,8 +55,8 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
       discount_price: -1,
       actual_price: -1,
     },
-    rating: {
-      rating: -1,
+    "product-rating": {
+      ratings: -1,
     },
   };
 

@@ -9,11 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Selectsort = () => {
   const router = useRouter();
-  const pathName = usePathname();
+  let path = usePathname();
+  const searchParams = useSearchParams();
+
   const sortBy = useMemo(
     () => [
       "Popularity",
@@ -26,12 +28,20 @@ const Selectsort = () => {
 
   const [selected, setSelected] = React.useState(sortBy[0]);
 
-  useEffect(() => {
-    console.log(pathName);
-  }, [selected]);
-
   return (
-    <Select onValueChange={setSelected} defaultValue="Popularity">
+    <Select
+      onValueChange={(value) => {
+        setSelected(value);
+        router.push(
+          `${path}?sort=${value
+            .replace(":", "")
+            .replace(/ /g, "-")
+            .toLowerCase()}`
+        );
+      }}
+      value={selected}
+      defaultValue="Popularity"
+    >
       <SelectTrigger className="w-[180px] h-9 border-0 hover:bg-secondary">
         <SelectValue placeholder={sortBy[0]} />
       </SelectTrigger>

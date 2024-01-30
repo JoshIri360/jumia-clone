@@ -9,22 +9,16 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+
 import { Filter, Star } from "lucide-react";
 import Selectsort from "@/components/Selectsort";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import AddToCartButton from "@/components/AddToCartButton";
+import PaginationComponent from "@/components/Pagination";
 
+// Generate static params for this page
 export function generateStaticParams() {
   return [
     { id: "cardio-equipment" },
@@ -51,6 +45,7 @@ export function generateStaticParams() {
   ];
 }
 
+// Define Product interface
 interface Product {
   _id: string;
   name: string;
@@ -63,11 +58,19 @@ interface Product {
   actual_price: number;
 }
 
+// Define SearchParams interface
 interface SearchParams {
   page: number | undefined;
   sort: string | undefined;
 }
 
+/**
+ * @function Page
+ * @summary This is a page function that displays the products in a category.
+ * @param {string} id - The id of the category.
+ * @param {number} itemPage - The page number of the products.
+ * @return {JSX.Element} - The JSX.Element representing the page.
+ */
 export default async function Page({
   params,
   searchParams,
@@ -208,82 +211,11 @@ export default async function Page({
               </Link>
             ))}
           </div>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href={
-                    currentPage > 1
-                      ? `/category/${id}?page=${currentPage - 1}`
-                      : "#"
-                  }
-                />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink
-                  href={`/category/${id}?page=1`}
-                  isActive={currentPage === 1}
-                >
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              {currentPage > 3 && (
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              )}
-              {currentPage > 2 && (
-                <PaginationItem>
-                  <PaginationLink
-                    href={`/category/${id}?page=${currentPage - 1}`}
-                  >
-                    {currentPage - 1}
-                  </PaginationLink>
-                </PaginationItem>
-              )}
-              {currentPage > 1 && currentPage < totalPages && (
-                <PaginationItem>
-                  <PaginationLink
-                    href={`/category/${id}?page=${currentPage}`}
-                    isActive={currentPage !== 1 && currentPage !== totalPages}
-                  >
-                    {currentPage}
-                  </PaginationLink>
-                </PaginationItem>
-              )}
-              {currentPage < totalPages - 1 && (
-                <PaginationItem>
-                  <PaginationLink
-                    href={`/category/${id}?page=${currentPage + 1}`}
-                  >
-                    {currentPage + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              )}
-              {currentPage < totalPages - 2 && (
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              )}
-              <PaginationItem>
-                <PaginationLink
-                  href={`/category/${id}?page=${totalPages}`}
-                  isActive={currentPage === totalPages}
-                >
-                  {totalPages}
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext
-                  href={
-                    currentPage < totalPages
-                      ? `/category/${id}?page=${currentPage + 1}`
-                      : "#"
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <PaginationComponent
+            id={id}
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
         </div>
       </div>
     </div>
