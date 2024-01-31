@@ -95,6 +95,8 @@ export default async function Page({
 
   const products: Product[] = res.data.products;
   const totalPages: number = res.data.totalPages;
+  const minPrice: number = res.data.minPrice;
+  const maxPrice: number = res.data.maxPrice;
 
   const { id } = params;
   return (
@@ -128,7 +130,7 @@ export default async function Page({
                     <Filter size={18} />
                   </Button>
                 </DrawerTrigger>
-                <FilterDrawer />
+                <FilterDrawer minPrice={minPrice} maxPrice={maxPrice} />
               </Drawer>
             </div>
           </div>
@@ -157,7 +159,7 @@ export default async function Page({
                     <div className="flex items-center gap-2">
                       {data.discount_price && (
                         <h4 className="font-bold my-1">
-                          ₦ {(data.discount_price * 10).toLocaleString()}
+                          ₦ {data.discount_price.toLocaleString()}
                         </h4>
                       )}
                       <h4
@@ -167,7 +169,7 @@ export default async function Page({
                             : "font-bold my-1"
                         }`}
                       >
-                        ₦ {(data.actual_price * 10).toLocaleString()}
+                        ₦ {data.actual_price.toLocaleString()}
                       </h4>
                     </div>
                   </div>

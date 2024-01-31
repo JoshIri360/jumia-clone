@@ -68,27 +68,34 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
     await connectToDB();
 
     // Find the products that match the category and sort, limit, and skip them according to the parameters
-    const products = await Product.find({ category: params.id })
+    let products = await Product.find({ category: params.id })
       .sort(sortDictionary)
       .limit(limit)
       .skip(page);
 
+    // Convert the prices of the products by multiplying them by 11
+    products = products.map((product) => ({
+      ...product._doc,
+      discount_price: product.discount_price
+        ? product.discount_price * 11
+        : null,
+      actual_price: product.actual_price * 11,
+    }));
+
     // Find the minimum and maximum prices
     const priceRange = await Product.aggregate([
       { $match: { category: params.id } },
-      { $sort: sortDictionary },
-      { $limit: limit },
       {
         $group: {
           _id: null,
-          minPrice: { $min: "$discount_price" },
-          maxPrice: { $max: "$discount_price" },
+          minPrice: { $min: { $ifNull: ["$discount_price", "$actual_price"] } },
+          maxPrice: { $max: { $ifNull: ["$discount_price", "$actual_price"] } },
         },
       },
     ]);
 
-    const minPrice = priceRange[0]?.minPrice;
-    const maxPrice = priceRange[0]?.maxPrice;
+    const minPrice = priceRange[0]?.minPrice * 11;
+    const maxPrice = priceRange[0]?.maxPrice * 11;
 
     // Count the total number of products that match the category
     const count = await Product.countDocuments({ category: params.id });

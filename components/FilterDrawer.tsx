@@ -11,9 +11,17 @@ import {
 import { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "./ui/input";
-2
-export function FilterDrawer() {
+
+export function FilterDrawer({
+  minPrice,
+  maxPrice,
+}: {
+  minPrice: number;
+  maxPrice: number;
+}) {
   const [goal, setGoal] = useState(350);
+  const [minValue, setMinValue] = useState(minPrice);
+  const [maxValue, setMaxValue] = useState(maxPrice);
 
   function onClick(adjustment: number) {
     setGoal(Math.max(200, Math.min(400, goal + adjustment)));
@@ -29,15 +37,30 @@ export function FilterDrawer() {
         <div className="p-4 pb-0">
           <div>
             <div className="flex justify-between items-center">
-              <Input type="number" placeholder="Min" className="w-[30%]" />
+              <Input
+                type="number"
+                placeholder="Min"
+                className="w-[30%]"
+                value={minValue}
+              />
               <div className="text-3xl font-medium">-</div>
-              <Input type="number" placeholder="Max" className="w-[30%]" />
+              <Input
+                type="number"
+                placeholder="Max"
+                className="w-[30%]"
+                value={maxValue}
+              />
             </div>
             <div className="mt-4">
               <Slider
                 className="mt-1"
-                defaultValue={[25, 50]}
-                max={100}
+                defaultValue={[minPrice, maxPrice]}
+                onValueChange={(value) => {
+                  setMinValue(value[0]);
+                  setMaxValue(value[1]);
+                }}
+                min={minPrice}
+                max={maxPrice}
                 step={1}
               />
             </div>
