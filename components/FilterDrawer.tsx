@@ -19,22 +19,21 @@ export function FilterDrawer({
   minPrice: number;
   maxPrice: number;
 }) {
-  const [goal, setGoal] = useState(350);
   const [minValue, setMinValue] = useState(minPrice);
   const [maxValue, setMaxValue] = useState(maxPrice);
-
-  function onClick(adjustment: number) {
-    setGoal(Math.max(200, Math.min(400, goal + adjustment)));
-  }
+  const [minRating, setMinRating] = useState(0);
+  const [maxRating, setMaxRating] = useState(5);
 
   return (
     <DrawerContent>
       <div className="mx-auto w-full max-w-sm">
         <DrawerHeader>
-          <DrawerTitle>Filter Documents</DrawerTitle>
-          <DrawerDescription>Filter documents by price (₦).</DrawerDescription>
+          <DrawerTitle>Filter Products</DrawerTitle>
+          <DrawerDescription>
+            Filter products by price (₦) and ratings.
+          </DrawerDescription>
         </DrawerHeader>
-        <div className="p-4 pb-0">
+        <div className="px-4">
           <div>
             <div className="flex justify-between items-center">
               <Input
@@ -63,6 +62,37 @@ export function FilterDrawer({
                 max={maxPrice}
                 step={1}
               />
+            </div>
+            <div className="pt-5">
+              <p className="mb-1">Ratings</p>
+              <div className="flex justify-between items-center">
+                <Input
+                  type="number"
+                  placeholder="Min"
+                  className="w-[30%]"
+                  value={minRating}
+                />
+                <div className="text-3xl font-medium">-</div>
+                <Input
+                  type="number"
+                  placeholder="Max"
+                  className="w-[30%]"
+                  value={maxRating}
+                />
+              </div>
+              <div className="mt-4">
+                <Slider
+                  className="mt-1"
+                  defaultValue={[minRating, maxRating]}
+                  onValueChange={(value) => {
+                    setMinRating(value[0]);
+                    setMaxRating(value[1]);
+                  }}
+                  min={0}
+                  max={5}
+                  step={1}
+                />
+              </div>
             </div>
           </div>
         </div>
