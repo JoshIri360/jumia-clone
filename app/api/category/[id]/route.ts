@@ -39,6 +39,16 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
     (parseInt(req.nextUrl.searchParams.get("page") as string) || DEFAULT_PAGE) *
     20;
 
+  let filterPriceMin: number = 0;
+  let filterPriceMax: number = 0;
+  const filterPrice = req.nextUrl.searchParams.get("filterPrice");
+  if (filterPrice) {
+    filterPriceMin = parseInt(filterPrice.split("-")[0]);
+    filterPriceMin /= 11;
+    filterPriceMax = parseInt(filterPrice.split("-")[1]);
+    filterPriceMax /= 11;
+  }
+
   // Get the sort parameter from the request
   const sort: string = req.nextUrl.searchParams.get("sort") || DEFAULT_SORT;
 
@@ -48,12 +58,10 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
       no_of_ratings: -1,
     },
     "price-low-to-high": {
-      discount_price: 1,
-      actual_price: 1,
+      price_to_sort: 1,
     },
     "price-high-to-low": {
-      discount_price: -1,
-      actual_price: -1,
+      price_to_sort: -1,
     },
     "product-rating": {
       ratings: -1,
@@ -68,19 +76,28 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
     await connectToDB();
 
     // Find the products that match the category and sort, limit, and skip them according to the parameters
-    let products = await Product.find({ category: params.id })
-      .sort(sortDictionary)
-      .limit(limit)
-      .skip(page);
+    let products = await Product.aggregate([
+      { $match: { category: params.id } },
+      {
+        $addFields: {
+          price_to_sort: {
+            $ifNull: ["$discount_price", "$actual_price"],
+          },
+        },
+      },
+      { $sort: sortDictionary },
+      { $limit: limit },
+      { $skip: page },
+    ]);
 
     // Convert the prices of the products by multiplying them by 11
-    products = products.map((product) => ({
-      ...product._doc,
-      discount_price: product.discount_price
-        ? product.discount_price * 11
-        : null,
-      actual_price: product.actual_price * 11,
-    }));
+    products = products.map((product) => {
+      if (product.discount_price) {
+        product.discount_price *= 11;
+      }
+      product.actual_price *= 11;
+      return product;
+    });
 
     // Find the minimum and maximum prices
     const priceRange = await Product.aggregate([
