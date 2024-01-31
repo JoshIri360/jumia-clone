@@ -17,6 +17,7 @@ import Image from "next/image";
 import axios from "axios";
 import AddToCartButton from "@/components/AddToCartButton";
 import PaginationComponent from "@/components/Pagination";
+import { FilterDrawer } from "@/components/FilterDrawer";
 
 // Generate static params for this page
 export function generateStaticParams() {
@@ -127,20 +128,7 @@ export default async function Page({
                     <Filter size={18} />
                   </Button>
                 </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                    <DrawerDescription>
-                      This action cannot be undone.
-                    </DrawerDescription>
-                  </DrawerHeader>
-                  <DrawerFooter>
-                    <Button>Submit</Button>
-                    <DrawerClose>
-                      <Button variant="outline">Cancel</Button>
-                    </DrawerClose>
-                  </DrawerFooter>
-                </DrawerContent>
+                <FilterDrawer />
               </Drawer>
             </div>
           </div>
