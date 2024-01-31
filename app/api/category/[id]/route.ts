@@ -71,8 +71,6 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
   // Sort the results
   sortDictionary = sortDictionary[sort] as SortedDictionary;
 
-  console.log(sortDictionary);
-
   try {
     // Connect to the database
     await connectToDB();

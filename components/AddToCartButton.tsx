@@ -8,7 +8,6 @@ const AddToCartButton = () => {
       className="mt-2 font-bold w-full"
       onClick={(e) => {
         e.preventDefault();
-        console.log("clicked");
       }}
     >
       ADD TO CART
