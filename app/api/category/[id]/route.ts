@@ -73,6 +73,23 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
       .limit(limit)
       .skip(page);
 
+    // Find the minimum and maximum prices
+    const priceRange = await Product.aggregate([
+      { $match: { category: params.id } },
+      { $sort: sortDictionary },
+      { $limit: limit },
+      {
+        $group: {
+          _id: null,
+          minPrice: { $min: "$discount_price" },
+          maxPrice: { $max: "$discount_price" },
+        },
+      },
+    ]);
+
+    const minPrice = priceRange[0]?.minPrice;
+    const maxPrice = priceRange[0]?.maxPrice;
+
     // Count the total number of products that match the category
     const count = await Product.countDocuments({ category: params.id });
 
@@ -85,6 +102,8 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
         products,
         count,
         totalPages,
+        minPrice,
+        maxPrice,
       }),
       {
         status: 201,
