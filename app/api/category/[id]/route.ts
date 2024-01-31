@@ -58,10 +58,10 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
       no_of_ratings: -1,
     },
     "price-low-to-high": {
-      price_to_sort: 1,
+      price: 1,
     },
     "price-high-to-low": {
-      price_to_sort: -1,
+      price: -1,
     },
     "product-rating": {
       ratings: -1,
@@ -71,24 +71,17 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
   // Sort the results
   sortDictionary = sortDictionary[sort] as SortedDictionary;
 
+  console.log(sortDictionary);
+
   try {
     // Connect to the database
     await connectToDB();
 
     // Find the products that match the category and sort, limit, and skip them according to the parameters
-    let products = await Product.aggregate([
-      { $match: { category: params.id } },
-      {
-        $addFields: {
-          price_to_sort: {
-            $ifNull: ["$discount_price", "$actual_price"],
-          },
-        },
-      },
-      { $sort: sortDictionary },
-      { $limit: limit },
-      { $skip: page },
-    ]);
+    let products = await Product.find({ category: params.id })
+      .sort(sortDictionary)
+      .limit(limit)
+      .skip(page);
 
     // Convert the prices of the products by multiplying them by 11
     products = products.map((product) => {
