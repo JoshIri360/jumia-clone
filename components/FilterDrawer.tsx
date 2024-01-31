@@ -1,7 +1,4 @@
 "use client";
-import { Minus, Plus } from "lucide-react";
-import { Bar, BarChart, ResponsiveContainer } from "recharts";
-
 import { Button } from "@/components/ui/button";
 import {
   DrawerClose,
@@ -12,12 +9,9 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "./ui/input";
-
-type SliderProps = React.ComponentProps<typeof Slider>;
-
+2
 export function FilterDrawer() {
   const [goal, setGoal] = useState(350);
 
