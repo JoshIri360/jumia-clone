@@ -83,7 +83,7 @@ export default async function Page({
   const sort: string = searchParams?.sort ? searchParams.sort : "popularity";
 
   const res = await axios.get(
-    `http://localhost:3000/api/category/${params.id}/products`,
+    `http://localhost:3000/api/category/${params.id}`,
     {
       params: {
         page: currentPage - 1,
