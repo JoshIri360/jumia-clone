@@ -1,15 +1,3 @@
-import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-
 import { Filter, Star } from "lucide-react";
 import Selectsort from "@/components/Selectsort";
 import Link from "next/link";
@@ -81,6 +69,7 @@ export default async function Page({
 }) {
   const currentPage: number = searchParams?.page ? searchParams.page * 1 : 1;
   const sort: string = searchParams?.sort ? searchParams.sort : "popularity";
+  const price: string | undefined = searchParams?.price;
 
   const res = await axios.get(
     `http://localhost:3000/api/category/${params.id}`,
@@ -89,6 +78,7 @@ export default async function Page({
         page: currentPage - 1,
         limit: "20",
         sort: sort,
+        price: price,
       },
     }
   );
@@ -124,14 +114,7 @@ export default async function Page({
             </p>
             <div className="h-fit flex gap-2">
               <Selectsort />
-              <Drawer>
-                <DrawerTrigger asChild>
-                  <Button variant={"outline"} size={"icon"} className="h-9">
-                    <Filter size={18} />
-                  </Button>
-                </DrawerTrigger>
-                <FilterDrawer minPrice={minPrice} maxPrice={maxPrice} />
-              </Drawer>
+              <FilterDrawer minPrice={minPrice} maxPrice={maxPrice} />
             </div>
           </div>
         </div>
@@ -201,11 +184,13 @@ export default async function Page({
               </Link>
             ))}
           </div>
-          <PaginationComponent
-            id={id}
-            currentPage={currentPage}
-            totalPages={totalPages}
-          />
+          {totalPages > 1 && (
+            <PaginationComponent
+              id={id}
+              currentPage={currentPage}
+              totalPages={totalPages}
+            />
+          )}
         </div>
       </div>
     </div>

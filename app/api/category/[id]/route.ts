@@ -41,7 +41,8 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
 
   let filterPriceMin: number = 0;
   let filterPriceMax: number = 0;
-  const filterPrice = req.nextUrl.searchParams.get("filterPrice");
+  const filterPrice = req.nextUrl.searchParams.get("price");
+
   if (filterPrice) {
     filterPriceMin = parseInt(filterPrice.split("-")[0]);
     filterPriceMin /= 11;
@@ -75,8 +76,18 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
     // Connect to the database
     await connectToDB();
 
-    // Find the products that match the category and sort, limit, and skip them according to the parameters
-    let products = await Product.find({ category: params.id })
+    // Define the filter object
+    let filter: any = { category: params.id };
+
+    // Add the price filter if filterPrice is provided
+    if (filterPrice) {
+      filter.actual_price = { $gte: filterPriceMin, $lte: filterPriceMax };
+    }
+
+    console.log(filter)
+
+    // Find the products that match the filter and sort, limit, and skip them according to the parameters
+    let products = await Product.find(filter)
       .sort(sortDictionary)
       .limit(limit)
       .skip(page);
@@ -89,6 +100,9 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
       product.actual_price *= 11;
       return product;
     });
+
+    // Count the total number of products
+    const count = products.length
 
     // Find the minimum and maximum prices
     const priceRange = await Product.aggregate([
@@ -104,9 +118,6 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
 
     const minPrice = priceRange[0]?.minPrice * 11;
     const maxPrice = priceRange[0]?.maxPrice * 11;
-
-    // Count the total number of products that match the category
-    const count = await Product.countDocuments({ category: params.id });
 
     // Calculate the total number of pages
     const totalPages = Math.ceil(count / limit);

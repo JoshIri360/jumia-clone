@@ -9,6 +9,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import queryString from "query-string";
 
 type PaginationComponentProps = {
   id: string;
@@ -25,34 +26,30 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
   let path = usePathname();
   const searchParams = useSearchParams();
 
-  let hasParams = false;
+  const params: { [key: string]: string } = {};
 
   // Iterate over searchParams.entries()
   for (const [key, value] of searchParams.entries()) {
     // Append each key-value pair to the path
     if (key !== "page") {
-      path += `${hasParams ? "&" : "?"}${key}=${value}`;
-      hasParams = true;
+      params[key] = value;
     }
   }
+
+  const createUrl = (page: number) => {
+    return queryString.stringifyUrl({ url: path, query: { ...params, page } });
+  };
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={
-              currentPage > 1
-                ? `${path}${hasParams ? "&" : "?"}page=${currentPage - 1}`
-                : "#"
-            }
+            href={currentPage > 1 ? createUrl(currentPage - 1) : "#"}
           />
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink
-            href={`${path}${hasParams ? "&" : "?"}page=1`}
-            isActive={currentPage === 1}
-          >
+          <PaginationLink href={createUrl(1)} isActive={currentPage === 1}>
             1
           </PaginationLink>
         </PaginationItem>
@@ -63,9 +60,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
         )}
         {currentPage > 2 && (
           <PaginationItem>
-            <PaginationLink
-              href={`${path}${hasParams ? "&" : "?"}page=${currentPage - 1}`}
-            >
+            <PaginationLink href={createUrl(currentPage - 1)}>
               {currentPage - 1}
             </PaginationLink>
           </PaginationItem>
@@ -73,7 +68,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
         {currentPage > 1 && currentPage < totalPages && (
           <PaginationItem>
             <PaginationLink
-              href={`${path}${hasParams ? "&" : "?"}page=${currentPage}`}
+              href={createUrl(currentPage)}
               isActive={currentPage !== 1 && currentPage !== totalPages}
             >
               {currentPage}
@@ -82,9 +77,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
         )}
         {currentPage < totalPages - 1 && (
           <PaginationItem>
-            <PaginationLink
-              href={`${path}${hasParams ? "&" : "?"}page=${currentPage + 1}`}
-            >
+            <PaginationLink href={createUrl(currentPage + 1)}>
               {currentPage + 1}
             </PaginationLink>
           </PaginationItem>
@@ -96,7 +89,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
         )}
         <PaginationItem>
           <PaginationLink
-            href={`${path}${hasParams ? "&" : "?"}page=${totalPages}`}
+            href={createUrl(totalPages)}
             isActive={currentPage === totalPages}
           >
             {totalPages}
@@ -104,11 +97,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
         </PaginationItem>
         <PaginationItem>
           <PaginationNext
-            href={
-              currentPage < totalPages
-                ? `${path}${hasParams ? "&" : "?"}page=${currentPage + 1}`
-                : "#"
-            }
+            href={currentPage < totalPages ? createUrl(currentPage + 1) : "#"}
           />
         </PaginationItem>
       </PaginationContent>

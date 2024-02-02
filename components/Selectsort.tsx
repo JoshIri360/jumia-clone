@@ -10,11 +10,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import queryString from "query-string";
 
 const Selectsort = () => {
   const router = useRouter();
   let path = usePathname();
   const searchParams = useSearchParams();
+
+  const params: { [key: string]: string } = {};
+
+  // Iterate over searchParams.entries()
+  for (const [key, value] of searchParams.entries()) {
+    // Append each key-value pair to the path
+    if (key !== "page") {
+      params[key] = value;
+    }
+  }
+
+  const createUrl = (page: number) => {
+    return queryString.stringifyUrl({ url: path, query: { ...params, page } });
+  };
+
   const sortBy = useMemo(
     () => [
       "Popularity",
@@ -27,20 +43,18 @@ const Selectsort = () => {
   const [selected, setSelected] = React.useState("loading...");
 
   useEffect(() => {
-    if (searchParams.has("sort")) {
-      switch (searchParams.get("sort")) {
-        case "price-low-to-high":
-          setSelected("Price: Low to High");
-          break;
-        case "price-high-to-low":
-          setSelected("Price: High to Low");
-          break;
-        case "product-rating":
-          setSelected("Product Rating");
-          break;
-        default:
-          setSelected("Popularity");
-      }
+    switch (searchParams.get("sort")) {
+      case "price-low-to-high":
+        setSelected("Price: Low to High");
+        break;
+      case "price-high-to-low":
+        setSelected("Price: High to Low");
+        break;
+      case "product-rating":
+        setSelected("Product Rating");
+        break;
+      default:
+        setSelected("Popularity");
     }
   }, [searchParams]);
 
