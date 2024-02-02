@@ -22,14 +22,10 @@ const Selectsort = () => {
   // Iterate over searchParams.entries()
   for (const [key, value] of searchParams.entries()) {
     // Append each key-value pair to the path
-    if (key !== "page") {
+    if (key !== "sort") {
       params[key] = value;
     }
   }
-
-  const createUrl = (page: number) => {
-    return queryString.stringifyUrl({ url: path, query: { ...params, page } });
-  };
 
   const sortBy = useMemo(
     () => [
@@ -40,6 +36,7 @@ const Selectsort = () => {
     ],
     []
   );
+
   const [selected, setSelected] = React.useState("loading...");
 
   useEffect(() => {
@@ -58,15 +55,26 @@ const Selectsort = () => {
     }
   }, [searchParams]);
 
+  const createUrl = (sort: string) => {
+    return queryString.stringifyUrl({ url: path, query: { ...params, sort } });
+  };
+
   return (
     <Select
       onValueChange={(value) => {
         setSelected(value);
         router.push(
-          `${path}?sort=${value
-            .replace(":", "")
-            .replace(/ /g, "-")
-            .toLowerCase()}`
+          createUrl(
+            value === "Price: Low to High"
+              ? "price-low-to-high"
+              : value === "Price: High to Low"
+              ? "price-high-to-low"
+              : value === "Popularity"
+              ? "popularity"
+              : value === "Product Rating"
+              ? "product-rating"
+              : ""
+          )
         );
       }}
       value={selected}

@@ -81,7 +81,7 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
 
     // Add the price filter if filterPrice is provided
     if (filterPrice) {
-      filter.actual_price = { $gte: filterPriceMin, $lte: filterPriceMax };
+      filter.price = { $gte: filterPriceMin, $lte: filterPriceMax };
     }
 
     console.log(filter)
