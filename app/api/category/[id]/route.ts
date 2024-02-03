@@ -84,8 +84,6 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
       filter.price = { $gte: filterPriceMin, $lte: filterPriceMax };
     }
 
-    console.log(filter)
-
     // Find the products that match the filter and sort, limit, and skip them according to the parameters
     let products = await Product.find(filter)
       .sort(sortDictionary)
@@ -102,7 +100,9 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
     });
 
     // Count the total number of products
-    const count = products.length
+    const count = await Product.countDocuments(filter);
+
+    console.log(count, "count")
 
     // Find the minimum and maximum prices
     const priceRange = await Product.aggregate([

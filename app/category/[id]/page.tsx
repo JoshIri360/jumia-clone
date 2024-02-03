@@ -88,6 +88,8 @@ export default async function Page({
   const minPrice: number = res.data.minPrice;
   const maxPrice: number = res.data.maxPrice;
 
+  console.log(totalPages)
+
   const { id } = params;
   return (
     <div className="bg-secondary w-full h-full flex items-center flex-col">
@@ -184,7 +186,7 @@ export default async function Page({
               </Link>
             ))}
           </div>
-          {totalPages > 1 && (
+          {totalPages != 1 && (
             <PaginationComponent
               id={id}
               currentPage={currentPage}

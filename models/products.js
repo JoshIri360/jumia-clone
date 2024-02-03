@@ -33,6 +33,10 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Product = models.Product || model("Product", productSchema);
