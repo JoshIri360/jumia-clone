@@ -10,12 +10,17 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useState } from "react";
-import { Slider } from "@/components/ui/slider";
-import { Input } from "./ui/input";
+import { useEffect, useMemo, useState } from "react";
 import queryString from "query-string";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "lucide-react";
+import FilterInputSlider from "./FilterInputSlider";
+
+interface QueryParams {
+  price?: string;
+  rating?: string;
+  page?: number;
+}
 
 export function FilterDrawer({
   minPrice,
@@ -32,31 +37,55 @@ export function FilterDrawer({
   const [minRatingValue, setMinRatingValue] = useState(minRating);
   const [maxRatingValue, setMaxRatingValue] = useState(maxRating);
 
-  const checkValue = (
-    value: number,
-    upperBound: number,
-    lowerBound: number
-  ) => {
-    return value >= lowerBound && value <= upperBound;
-  };
-
   const router = useRouter();
   let path = usePathname();
   const searchParams = useSearchParams();
 
-  const params: { [key: string]: string } = {};
+  const params: { [key: string]: string } = useMemo(() => {
+    const params: { [key: string]: string } = {};
+    // Iterate over searchParams.entries()
+    for (const [key, value] of searchParams.entries()) {
+      params[key] = value;
+    }
+    return params;
+  }, [searchParams]);
 
-  // Iterate over searchParams.entries()
-  for (const [key, value] of searchParams.entries()) {
-    params[key] = value;
-  }
+  useEffect(() => {
+    if (searchParams.get("price")) {
+      const [min, max] = searchParams.get("price")!.split("-");
+      const newMin = Number(min);
+      const newMax = Number(max);
+      if (newMin !== minValue) setMinValue(newMin);
+      if (newMax !== maxValue) setMaxValue(newMax);
+    }
 
-  const createUrl = (price: string, rating: string) => {
-    return queryString.stringifyUrl({
-      url: path,
-      query: { ...params, price, rating, page: 1 },
-    });
-  };
+    if (searchParams.get("rating")) {
+      const [min, max] = searchParams.get("rating")!.split("-");
+      const newMin = Number(min);
+      const newMax = Number(max);
+      if (newMin !== minRatingValue) setMinRatingValue(newMin);
+      if (newMax !== maxRatingValue) setMaxRatingValue(newMax);
+    }
+  }, [searchParams, minValue, maxValue, minRatingValue, maxRatingValue]);
+
+  const createUrl = useMemo(
+    () => (price?: string, rating?: string) => {
+      const query: QueryParams = { ...params, page: 1 };
+      if (price) query.price = price;
+      if (rating) query.rating = rating;
+
+      const stringifiableParams: queryString.StringifiableRecord =
+        Object.fromEntries(
+          Object.entries(params).map(([key, value]) => [key, String(value)])
+        );
+
+      return queryString.stringifyUrl({
+        url: path,
+        query: stringifiableParams,
+      });
+    },
+    [path, params]
+  );
 
   return (
     <Drawer>
@@ -75,91 +104,24 @@ export function FilterDrawer({
           </DrawerHeader>
           <div className="px-4">
             <div>
-              <div className="flex justify-between items-center">
-                <Input
-                  type="number"
-                  placeholder="Min"
-                  className="w-[30%]"
-                  defaultValue={minPrice}
-                  value={minValue}
-                  onChange={(e) =>
-                    checkValue(Number(e.target.value), maxPrice, minPrice) &&
-                    setMinValue(Number(e.target.value))
-                  }
-                />
-                <div className="text-3xl font-medium">-</div>
-                <Input
-                  type="number"
-                  placeholder="Max"
-                  className="w-[30%]"
-                  defaultValue={maxPrice}
-                  value={maxValue}
-                  onChange={(e) =>
-                    checkValue(Number(e.target.value), maxPrice, minPrice) &&
-                    setMaxValue(Number(e.target.value))
-                  }
-                />
-              </div>
-              <div className="mt-4">
-                <Slider
-                  className="mt-1"
-                  defaultValue={[minPrice, maxPrice]}
-                  onValueChange={(value) => {
-                    setMinValue(value[0]);
-                    setMaxValue(value[1]);
-                  }}
-                  min={minPrice}
-                  max={maxPrice}
-                  step={1}
-                />
-              </div>
+              <FilterInputSlider
+                min={minPrice}
+                max={maxPrice}
+                minValue={minValue}
+                maxValue={maxValue}
+                setMinValue={setMinValue}
+                setMaxValue={setMaxValue}
+              />
               <div className="pt-5">
                 <p className="mb-1">Ratings</p>
-                <div className="flex justify-between items-center">
-                  <Input
-                    type="number"
-                    placeholder="Min"
-                    className="w-[30%]"
-                    defaultValue={minRating}
-                    value={minRatingValue}
-                    onChange={(e) =>
-                      checkValue(
-                        Number(e.target.value),
-                        maxRating,
-                        minRating
-                      ) && setMinRatingValue(Number(e.target.value))
-                    }
-                  />
-                  <div className="text-3xl font-medium">-</div>
-                  <Input
-                    type="number"
-                    placeholder="Max"
-                    className="w-[30%]"
-                    defaultValue={maxRating}
-                    value={maxRatingValue}
-                    onChange={(e) =>
-                      checkValue(
-                        Number(e.target.value),
-                        maxRating,
-                        minRating
-                      ) && setMaxRatingValue(Number(e.target.value))
-                    }
-                  />
-                </div>
-                <div className="mt-4">
-                  <Slider
-                    className="mt-1"
-                    defaultValue={[minRating, maxRating]}
-                    value={[minRatingValue, maxRatingValue]}
-                    onValueChange={(value) => {
-                      setMinRatingValue(value[0]);
-                      setMaxRatingValue(value[1]);
-                    }}
-                    min={0}
-                    max={5}
-                    step={1}
-                  />
-                </div>
+                <FilterInputSlider
+                  min={minRating}
+                  max={maxRating}
+                  minValue={minRatingValue}
+                  maxValue={maxRatingValue}
+                  setMinValue={setMinRatingValue}
+                  setMaxValue={setMaxRatingValue}
+                />
               </div>
             </div>
           </div>
@@ -167,11 +129,18 @@ export function FilterDrawer({
             <DrawerClose asChild>
               <Button
                 onClick={() => {
-                  console.log("Filtering products...");
-                  const href = createUrl(
-                    `${minValue}-${maxValue}`,
-                    `${minRatingValue}-${maxRatingValue}`
-                  );
+                  let price = "";
+                  if (minValue !== minPrice || maxValue !== maxPrice) {
+                    price = `${minValue}-${maxValue}`;
+                  }
+                  let rating = "";
+                  if (
+                    minRatingValue !== minRating ||
+                    maxRatingValue !== maxRating
+                  ) {
+                    rating = `${minRatingValue}-${maxRatingValue}`;
+                  }
+                  const href = createUrl(price, rating);
                   router.push(href);
                 }}
               >

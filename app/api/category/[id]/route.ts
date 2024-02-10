@@ -102,7 +102,7 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
     // Count the total number of products
     const count = await Product.countDocuments(filter);
 
-    console.log(count, "count")
+    console.log(count, "count");
 
     // Find the minimum and maximum prices
     const priceRange = await Product.aggregate([
@@ -110,8 +110,8 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
       {
         $group: {
           _id: null,
-          minPrice: { $min: { $ifNull: ["$discount_price", "$actual_price"] } },
-          maxPrice: { $max: { $ifNull: ["$discount_price", "$actual_price"] } },
+          minPrice: { $min: "$price" },
+          maxPrice: { $max: "$price" },
         },
       },
     ]);

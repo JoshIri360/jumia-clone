@@ -51,14 +51,15 @@ interface Product {
 interface SearchParams {
   page: number | undefined;
   sort: string | undefined;
+  price: string | undefined;
 }
 
 /**
- * @function Page
- * @summary This is a page function that displays the products in a category.
- * @param {string} id - The id of the category.
- * @param {number} itemPage - The page number of the products.
- * @return {JSX.Element} - The JSX.Element representing the page.
+ * Renders the page component for a specific category.
+ *
+ * @param params - The parameters for the category and item page.
+ * @param searchParams - The search parameters for filtering and sorting.
+ * @returns The JSX element representing the page component.
  */
 export default async function Page({
   params,
@@ -87,8 +88,8 @@ export default async function Page({
   const totalPages: number = res.data.totalPages;
   const minPrice: number = res.data.minPrice;
   const maxPrice: number = res.data.maxPrice;
-
-  console.log(totalPages)
+  const currentMinPrice: number = res.data.currentMinPrice;
+  const currentMaxPrice: number = res.data.currentMaxPrice;
 
   const { id } = params;
   return (
