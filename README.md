@@ -3,6 +3,9 @@
 ## Overview
 Welcome to the repository for my Jumia Clone project! This project is a work in progress and is built using Next.js for frontend development, MongoDB for the database, Lucide for icons, and ShadcnUI for the user interface. Inspired by the popular ecommerce platform Jumia, I aim to replicate its functionality and user experience.
 
+https://github.com/JoshIri360/jumia-clone/assets/91752742/168d7a6e-f549-4b8a-91a7-3a1bcf4b79e2
+
+
 Leveraging MongoDB's Atlas vector search feature, I've optimized product search and retrieval for enhanced performance.
 
 The database consists of over 100,000 products from Amazon to populate it. It's been quite the endeavor, but I'm excited about the possibilities it presents!
